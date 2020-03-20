@@ -22,7 +22,7 @@ const CompareList = ({ repositories }) => (
                         <small>open issues</small>
                     </li>
                     <li>
-                        {repository.pushed_at} <small>last commit</small>
+                        {repository.last_commit} <small>last commit</small>
                     </li>
                 </ul>
             </Repository>
