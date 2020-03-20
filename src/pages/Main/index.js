@@ -8,13 +8,17 @@ import api from "../../services/api";
 
 export default class Main extends Component {
     state = {
+        notFound: false,
+        loading: false,
         repository_input: "",
         repositories: []
     };
 
     handleAddRepository = async e => {
         e.preventDefault();
+        if (this.state.repository_input === "") return;
         try {
+            this.setState({ loading: true });
             const { data: repository } = await api.get(
                 `/repos/${this.state.repository_input}`
             );
@@ -24,7 +28,18 @@ export default class Main extends Component {
                 repository_input: ""
             });
         } catch (error) {
-            alert("tem esse repo nao");
+            this.setState({
+                notFound: true,
+                repository_input: "Repositório não encontrado !"
+            });
+            setTimeout(
+                function() {
+                    this.setState({ repository_input: "", notFound: false });
+                }.bind(this),
+                1000
+            );
+        } finally {
+            this.setState({ loading: false });
         }
     };
 
@@ -32,7 +47,10 @@ export default class Main extends Component {
         return (
             <Container>
                 <img src={logo} alt="GitHub Compare" />
-                <Form onSubmit={this.handleAddRepository}>
+                <Form
+                    onError={this.state.notFound}
+                    onSubmit={this.handleAddRepository}
+                >
                     <input
                         type="text"
                         placeholder="usuário/repositório"
@@ -41,10 +59,18 @@ export default class Main extends Component {
                             this.setState({ repository_input: e.target.value })
                         }
                     />
-                    <button>+</button>
+                    <button type="submit">
+                        {this.state.loading ? (
+                            <i class="fa fa-spinner fa-spin"></i>
+                        ) : (
+                            "+"
+                        )}
+                    </button>
                 </Form>
                 <CompareList repositories={this.state.repositories} />
             </Container>
         );
     }
 }
+
+// fa fa-spinner fa-pulse

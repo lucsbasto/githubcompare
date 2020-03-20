@@ -20,6 +20,7 @@ export const Repository = styled.div`
         display: flex;
         flex-direction: column;
         align-items: center;
+        font-weight: bold;
         /* justify-content: center; */
         img {
             width: 64px;
@@ -37,12 +38,12 @@ export const Repository = styled.div`
     ul {
         list-style: none;
         li {
+            color: #666;
             font-weight: bold;
             padding: 12px 20px;
             small {
                 font-weight: normal;
                 font-size: 12px;
-                color: #999;
                 font-style: italic;
             }
             &:nth-child(2n-1) {

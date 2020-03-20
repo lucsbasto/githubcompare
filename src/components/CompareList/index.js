@@ -7,7 +7,7 @@ const CompareList = ({ repositories }) => (
             <Repository key={repository.id}>
                 <header>
                     <img src={repository.owner.avatar_url} alt="facebook" />
-                    {repository.name}
+                    <strong>{repository.name}</strong>
                     <small>{repository.owner.login}</small>
                 </header>
                 <ul>
