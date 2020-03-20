@@ -1,14 +1,14 @@
 import React from "react";
 import logo from "../../assets/logo.png";
-import { Div, Form } from "./styles";
+import { Container, Form } from "./styles";
 const Main = () => (
-    <Div>
+    <Container>
         <img src={logo} alt="GitHub Compare" />
         <Form>
             <input type="text" placeholder="usuário/repositório" />
             <button>+</button>
         </Form>
-    </Div>
+    </Container>
 );
 
 export default Main;
