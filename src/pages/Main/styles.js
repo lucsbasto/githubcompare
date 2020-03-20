@@ -20,16 +20,16 @@ export const Form = styled.form`
         color: #999;
         font-size: 16px;
         border-radius: 5px;
-        border: ${props => (props.onError ? "1px solid red" : 0)};
-        animation-name: ${props => (props.onError ? "treme" : "")};
-        animation-duration: ${props => (props.onError ? "0.5s" : 0)};
+        border: ${props => (props.withError ? "1px solid red" : 0)};
+        animation-name: ${props => (props.withError ? "treme" : "")};
+        animation-duration: ${props => (props.withError ? "0.5s" : 0)};
     }
 
     button {
         width: 55px;
         height: 55px;
         padding: 0 10px;
-        background-color: ${props => (props.onError ? "#FF6347" : "#63f5b0")};
+        background-color: ${props => (props.withError ? "#FF6347" : "#63f5b0")};
         margin-left: 10px;
         border: 0;
         color: #fff;
@@ -37,9 +37,9 @@ export const Form = styled.form`
         font-weight: bold;
         font-size: 35px;
         transition: all 0.2s ease-out;
-        border: ${props => (props.onError ? "1px solid red" : 0)};
-        animation-name: ${props => (props.onError ? "treme" : "")};
-        animation-duration: ${props => (props.onError ? "0.5s" : 0)};
+        border: ${props => (props.withError ? "1px solid red" : 0)};
+        animation-name: ${props => (props.withError ? "treme" : "")};
+        animation-duration: ${props => (props.withError ? "0.5s" : 0)};
         &:hover {
             background-color: #52d89f;
             box-shadow: 0 8px 10px rgba(0, 0, 0, 0.2);

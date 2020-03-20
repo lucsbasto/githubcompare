@@ -13,19 +13,34 @@ export default class Main extends Component {
         repository_input: "",
         repositories: []
     };
+    componentDidMount() {
+        let repo = JSON.parse(localStorage.getItem("repositories"));
+        if (!repo || repo === []) return;
+        this.setState({ repositories: repo });
+    }
+    componentDidUpdate(prevProps, prevState) {
+        if (prevState.repositories.length !== 0) {
+            localStorage.setItem(
+                "repositories",
+                JSON.stringify(prevState.repositories)
+            );
+        }
+    }
 
     handleAddRepository = async e => {
         e.preventDefault();
         if (this.state.repository_input === "") return;
         try {
             this.setState({ loading: true });
+
             const { data: repository } = await api.get(
                 `/repos/${this.state.repository_input}`
             );
             repository.last_commit = moment(repository.pushed_at).fromNow();
             this.setState({
                 repositories: [...this.state.repositories, repository],
-                repository_input: ""
+                repository_input: "",
+                notFound: false
             });
         } catch (error) {
             this.setState({
@@ -48,7 +63,7 @@ export default class Main extends Component {
             <Container>
                 <img src={logo} alt="GitHub Compare" />
                 <Form
-                    onError={this.state.notFound}
+                    withError={this.state.notFound}
                     onSubmit={this.handleAddRepository}
                 >
                     <input
@@ -61,7 +76,7 @@ export default class Main extends Component {
                     />
                     <button type="submit">
                         {this.state.loading ? (
-                            <i class="fa fa-spinner fa-spin"></i>
+                            <i className="fa fa-spinner fa-spin"></i>
                         ) : (
                             "+"
                         )}
