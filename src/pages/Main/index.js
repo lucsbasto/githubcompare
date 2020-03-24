@@ -27,8 +27,6 @@ export default class Main extends Component {
         }
     }
 
-    verifyRepository = () => {};
-
     handleAddRepository = async e => {
         e.preventDefault();
         if (this.state.repository_input === "") return;
