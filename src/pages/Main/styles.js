@@ -7,6 +7,13 @@ export const Container = styled.div`
     padding-top: 60px;
 `;
 
+export const ContainerList = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 50px;
+`;
+
 export const Form = styled.form`
     margin-top: 20px;
     width: 100%;

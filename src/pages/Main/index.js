@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import moment from "moment";
 import logo from "../../assets/logo.png";
-import { Container, Form } from "./styles";
+import { Container, Form, ContainerList } from "./styles";
 import CompareList from "../../components/CompareList";
 
 import api from "../../services/api";
@@ -26,6 +26,8 @@ export default class Main extends Component {
             );
         }
     }
+
+    verifyRepository = () => {};
 
     handleAddRepository = async e => {
         e.preventDefault();
@@ -58,6 +60,29 @@ export default class Main extends Component {
         }
     };
 
+    handleClick = async e => {
+        const { index, action } = e;
+        if (action === "delete") {
+            let repos_copy = Array.from(this.state.repositories);
+            repos_copy.splice(index, 1);
+            this.setState({ repositories: repos_copy });
+        } else {
+            let repos_copy = Array.from(this.state.repositories);
+            let repo = repos_copy.splice(index, 1);
+            console.log("repo", repo[0].full_name);
+
+            const { data: repository } = await api.get(
+                `/repos/${repo[0].full_name}`
+            );
+            repository.last_commit = moment(repository.pushed_at).fromNow();
+            this.setState({
+                repositories: [...repos_copy, repository],
+                repository_input: "",
+                notFound: false
+            });
+        }
+    };
+
     render() {
         return (
             <Container>
@@ -78,11 +103,20 @@ export default class Main extends Component {
                         {this.state.loading ? (
                             <i className="fa fa-spinner fa-spin"></i>
                         ) : (
-                            "+"
+                            <i className="fa fa-plus"></i>
                         )}
                     </button>
                 </Form>
-                <CompareList repositories={this.state.repositories} />
+                <ContainerList>
+                    {this.state.repositories.map((repository, index) => (
+                        <CompareList
+                            key={repository.id}
+                            repository={repository}
+                            index={index}
+                            onClick={this.handleClick}
+                        />
+                    ))}
+                </ContainerList>
             </Container>
         );
     }

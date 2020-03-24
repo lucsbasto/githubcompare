@@ -14,14 +14,42 @@ export const Repository = styled.div`
     width: 250px;
     border-radius: 5px;
     margin: 0 10px;
-
+    button {
+        margin: 10px;
+    }
     header {
         padding-top: 20px;
         display: flex;
         flex-direction: column;
         align-items: center;
         font-weight: bold;
-        /* justify-content: center; */
+        justify-content: center;
+        position: relative;
+        .content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        button#apagar {
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            height: 30px;
+            width: 30px;
+        }
+        button#refresh {
+            position: absolute;
+            top: 0px;
+            left: 200px;
+            height: 30px;
+            width: 30px;
+        }
+        .info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
         img {
             width: 64px;
         }

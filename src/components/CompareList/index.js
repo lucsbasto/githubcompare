@@ -1,14 +1,31 @@
 import React from "react";
 import { Container, Repository } from "./styles";
 import PropTypes from "prop-types";
-const CompareList = ({ repositories }) => (
-    <Container>
-        {repositories.map(repository => (
-            <Repository key={repository.id}>
+function CompareList({ repository, index, onClick }) {
+    function apagar(e) {
+        e.preventDefault();
+        onClick({ action: "delete", index: index });
+    }
+    function refresh(e) {
+        e.preventDefault();
+        console.log("aq");
+        onClick({ action: "refresh", index: index });
+    }
+    return (
+        <Container>
+            <Repository>
                 <header>
-                    <img src={repository.owner.avatar_url} alt="facebook" />
-                    <strong>{repository.name}</strong>
-                    <small>{repository.owner.login}</small>
+                    <button id="apagar" onClick={apagar}>
+                        Apagar
+                    </button>
+                    <div className="content">
+                        <img src={repository.owner.avatar_url} alt="facebook" />
+                        <strong>{repository.name}</strong>
+                        <small>{repository.owner.login}</small>
+                    </div>
+                    <button id="refresh" onClick={refresh}>
+                        Refresh
+                    </button>
                 </header>
                 <ul>
                     <li>
@@ -26,25 +43,23 @@ const CompareList = ({ repositories }) => (
                     </li>
                 </ul>
             </Repository>
-        ))}
-    </Container>
-);
+        </Container>
+    );
+}
 
 CompareList.propTypes = {
-    repositories: PropTypes.arrayOf(
-        PropTypes.shape({
-            id: PropTypes.number,
-            name: PropTypes.string,
-            owner: PropTypes.shape({
-                login: PropTypes.string,
-                avatar_url: PropTypes.string
-            }),
-            stargazers_count: PropTypes.number,
-            forks_count: PropTypes.number,
-            open_issues_count: PropTypes.number,
-            pushed_at: PropTypes.string
-        })
-    )
+    repository: PropTypes.shape({
+        id: PropTypes.number,
+        name: PropTypes.string,
+        owner: PropTypes.shape({
+            login: PropTypes.string,
+            avatar_url: PropTypes.string
+        }),
+        stargazers_count: PropTypes.number,
+        forks_count: PropTypes.number,
+        open_issues_count: PropTypes.number,
+        pushed_at: PropTypes.string
+    })
 };
 
 export default CompareList;
